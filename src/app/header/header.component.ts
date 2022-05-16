@@ -9,18 +9,14 @@ import { DataStorageService } from '../shared/data-storage.service';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy{
-    constructor(private dataStorgae: DataStorageService,
-                private authService: AuthService){}
     isAuthenticated: boolean = false; 
     private userSub : Subscription;
+    constructor(private dataStorgae: DataStorageService,
+                private authService: AuthService){}
 
     ngOnInit(){
         this.userSub = this.authService.user.subscribe(user => {
-            this.isAuthenticated = !!user;
-            console.log(!user);
-            console.log(!!user);
-            console.log('hiiiiiiiiiii');
-            
+            this.isAuthenticated = !!user;            
         });
     }
 
@@ -30,6 +26,10 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
     fetchRecipe(){
         this.dataStorgae.fetchRecipe().subscribe();
+    }
+
+    onLogout(){
+        this.authService.logout();
     }
 
     ngOnDestroy(){
